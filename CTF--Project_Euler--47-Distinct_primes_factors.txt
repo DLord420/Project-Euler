@@ -1,0 +1,37 @@
+### 47-Distinct primes factors
+"""Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?"""
+
+
+import math
+
+
+found = False
+min = 210
+
+def prime_factors(n):
+    primes = set()
+    while n % 2 == 0:
+        primes.add(2)
+        n = n/ 2
+        
+    for i in range(3, int(math.sqrt(n))+1, 2):
+        while n % i == 0:
+            primes.add(i)
+            n = n / i
+            
+    if n > 2:
+        primes.add(n)
+        
+    return primes
+        
+        
+while not found:
+    if len(prime_factors(min)) == 4:
+        if len(prime_factors(min+1)) == 4:
+            if len(prime_factors(min+2)) == 4:
+                if len(prime_factors(min+3)) == 4:
+                    found = True
+                    print("First number in sequence: ", min)
+    min += 1
+
+

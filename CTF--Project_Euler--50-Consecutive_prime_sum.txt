@@ -1,0 +1,72 @@
+### 50-Consecutive prime sum
+"""Which prime, below one-million, can be written as the sum of the most consecutive primes?"""
+limit = 1000000
+
+def is_prime(n: int) -> bool:
+    if n <= 3:
+        return n > 1
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i ** 2 <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+primes = [x for x in range(2, limit) if is_prime(x)]
+
+nsum = count = 0
+sums1 = []
+results = []
+
+for i in primes:
+    if nsum + i >= limit:
+        break
+    nsum += i
+    count += 1
+    sums1.append(i)
+
+sums2 = sums1.copy()
+count2 = count
+
+tnum = tcount = 0
+while len(sums1) > 0:
+    nsum = sum(sums1)
+    while not is_prime(nsum):
+        sums1.pop()
+        count -= 1
+        nsum = sum(sums1)
+    if count >= tcount:
+        tcount = count
+        tnum = nsum
+    sums1.pop(0)
+    count -= 1
+results.append([tnum, tcount])
+
+tnum = tcount = 0
+while len(sums2) > 0:
+    nsum = sum(sums2)
+    while not is_prime(nsum):
+        sums2.pop(0)
+        count2 -= 1
+        nsum = sum(sums2)
+    if count2 >= tcount:
+        tcount = count2
+        tnum = nsum
+    sums2.pop()
+    count2 -= 1
+results.append([tnum, tcount])
+
+maxcount = maxnum = 0
+for i in results:
+    if i[1] > maxcount:
+        maxcount = i[1]
+        maxnum = i[0]
+
+print(maxnum)
+
+
+
+
+

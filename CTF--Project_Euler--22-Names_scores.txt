@@ -1,0 +1,30 @@
+### 22-Names scores
+#!/bin/python3
+
+"""What is the total of all the name scores in the file?"""
+#input file: p022_names.txt
+
+
+total = 0
+f = open("p022_names.txt", "r")
+
+contents = f.read()
+contents = contents.lower()
+contents = contents.replace('"', '')
+contents = contents.replace('\n', '')
+names = contents.split(',')
+names.sort()
+
+
+for word in names:
+	ind = names.index(word) + 1
+	score = 0
+	for char in word:
+		score += (ord(char) - 96)
+	score = score * ind
+	total += score
+
+f.close()
+
+print("Total of all the name scores in the file: " + str(total))
+

@@ -1,0 +1,23 @@
+### 34-Digit factorials
+#!/bin/python3
+"""Find the sum of all numbers which are equal to the sum of the factorial of their digits"""
+
+import math
+numbers = []
+
+for d in range(3, 999999):
+	digits = [int(x) for x in str(d)]
+	sum = 0
+	for n in digits:
+		sum = sum + (math.factorial(int(n)))
+	if (sum == d):
+		numbers.append(sum)
+		
+print(numbers)
+total = 0
+
+for num in numbers:
+	total = total + num
+print('Total sum = ' + str(total))
+
+

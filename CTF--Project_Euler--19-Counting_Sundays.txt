@@ -1,0 +1,42 @@
+### 19-Counting Sundays
+#!/bin/python3
+
+"""How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?"""
+
+year = 1904	#first leap year in 20th century
+leap = []
+calendar = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+sundays = [6]	#first Sunday's day number
+first_days = [1]
+
+
+while year < 2001:
+	leap.append(year)
+	year = year + 4
+
+all_days = (len(leap) * 366) + ((100 - len(leap)) * 365)
+
+def which_feb(y):
+	if y in leap:
+		return 29
+	else:
+		return 28
+
+for y in range(1901,2001):
+	feb = which_feb(y)
+	calendar[1] = feb
+	for m in range(12):
+		first = first_days[-1] + calendar[m]
+		first_days.append(first)
+	
+while sundays[-1] < all_days:
+	sunday = sundays[-1] + 7
+	sundays.append(sunday)
+
+if sundays[-1] > all_days:	#at times last sunday's day number tends to go over the limit
+	sundays.pop[-1]
+
+found = set(first_days).intersection(set(sundays))
+print("Number of the Sundays that fell on the first of the month during the twentieth century: " + str(len(found)))
+
+
